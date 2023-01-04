@@ -3,21 +3,16 @@
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-weight: bold;
   font-size: medium;
-  padding: 1%;
-
+  padding: 0%;
+  letter-spacing: 1px;
+  text-indent: 20px;
 
 }
 .navbar-brand{
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bold;
-  font-size: large;
-  margin-left: 5%;
+  font-size: x-large;
+  margin-top: 10px;
+  margin-left: 10%;
 }
-.navbar-inner{
-  background-image: url("/assets/bg4.jpg");
-   /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 
-}
