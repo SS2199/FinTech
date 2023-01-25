@@ -1,1 +1,1 @@
-# FinTech
+# FinTech Application
