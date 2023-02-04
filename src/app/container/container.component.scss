@@ -81,6 +81,20 @@ button{
   margin-top: 10px;
 }
 
+.bg-img {
+  background-size: cover;
+  position: relative;
+  background-image: url('~src/assets/card4.jpg');
+}
+
+.text-on-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 36px;
+}
 
 
 
