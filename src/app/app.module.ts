@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ContainerComponent } from './container/container.component';
 import { ProductComponent } from './product/product.component';
 import { AboutComponent } from './about/about.component';
+import { CarosalComponent } from './carosal/carosal.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AboutComponent } from './about/about.component';
     NavbarComponent,
     ContainerComponent,
     ProductComponent,
-    AboutComponent
+    AboutComponent,
+    CarosalComponent
   ],
   imports: [
     BrowserModule,
