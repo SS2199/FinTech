@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-carosal',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./carosal.component.scss']
 })
 export class CarosalComponent {
+
+ products!: any[];
+
+  constructor(private productService: ProductService) { }
+
+  ngOnInit() {
+    this.productService.getProducts().subscribe(products => {
+      this.products = products;
+    });
+  }
 
 }

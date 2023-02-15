@@ -9,6 +9,7 @@ import { ProductComponent } from './product/product.component';
 import { AboutComponent } from './about/about.component';
 import { CarosalComponent } from './carosal/carosal.component';
 
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { CarosalComponent } from './carosal/carosal.component';
   ],
   imports: [
     BrowserModule,
-
+    HttpClientModule ,
     AppRoutingModule
   ],
   providers: [],
