@@ -12,9 +12,12 @@ export class ProductService {
   getProducts(): Observable<Product[]> {
     // You could replace this with an HTTP request to a server that returns a list of products
     const products: Product[] = [
-      { name: 'Product 1', price: 10.99, quantity: 50 },
-      { name: 'Product 2', price: 24.99, quantity: 25 },
-      { name: 'Product 3', price: 14.99, quantity: 100 }
+      { name: 'Coconut Burfi', price: 600, image:'./assets/coco9.jpg'},
+      { name: 'Coconut Oil', price: 500, image:'./assets/card2.jpg' },
+      { name: 'Coconut Syrup', price: 300, image:'./assets/coco7.jpg' },
+      { name: 'Coconut Water', price: 400, image:'./assets/card4.jpg' },
+      { name: 'Coconut Goods', price: 590, image:'./assets/card5.jpg' },
+      { name: 'Coconut Plam Sugar', price: 595, image:'./assets/coco8.jpg' }
     ];
     return new Observable<Product[]>(subscriber => {
       subscriber.next(products);
@@ -26,5 +29,5 @@ export class ProductService {
 interface Product {
   name: string;
   price: number;
-  quantity: number;
+  image: string;
 }
