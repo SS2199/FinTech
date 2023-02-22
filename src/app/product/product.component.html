@@ -1,63 +1,14 @@
-<body>
-<div>
-  <h1>Our New Coconut Products</h1>
-</div>
-
-<div class="container" >
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card shadow-hover">
-        <img class="card-img-top"  src="assets/coco9.jpg" alt="card image">
-       <h3 class="card-title">Coconut Burfi</h3>
-        <p class="price">Rs.600</p>
-        <button type="button" class="btn btn-success">Order Now</button>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card shadow-hover">
-        <img class="card-img-top"  src="assets/card2.jpg" alt="card image">
-        <h3 class="card-title">Coconut Oil</h3>
-        <p class="price">Rs.500</p>
-        <button type="button" class="btn btn-success">Order Now</button>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card shadow-hover">
-        <img class="card-img-top" src="assets/coco7.jpg" alt="card image">
-        <h3 class="card-title">Coconut Syrup</h3>
-        <p class="price">Rs.300</p>
-        <button type="button" class="btn btn-success">Order Now</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" *ngFor="let product of products">
       <div class="card shadow-hover">
-        <img class="card-img-top"  src="assets/card4.jpg" alt="card image">
-        <h3 class="card-title">Coconut Water</h3>
-        <p class="price">Rs.400</p>
-        <button type="button" class="btn btn-success">Order Now</button>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card shadow-hover">
-        <img class="card-img-top"  src="assets/card5.jpg" alt="card image">
-        <h3 class="card-title">Coconut Goods</h3>
-        <p class="price">Rs.590</p>
-        <button type="button" class="btn btn-success">Order Now</button>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card shadow-hover">
-        <img class="card-img-top" src="assets/coco8.jpg" alt="card image">
-        <h3 class="card-title">Coconut Plam Sugar</h3>
-        <p class="price">Rs.559</p>
-        <button type="button" class="btn btn-success">Order Now</button>
+        <img class="card-img-top" [src]="product.image" alt="card image">
+        <div class="card-body">
+          <h3 class="card-title">{{ product.name }}</h3>
+          <p class="price">Rs.{{ product.price }}</p>
+          <button type="button" class="btn btn-success">Order Now</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</body>

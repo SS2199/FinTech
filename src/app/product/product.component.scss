@@ -1,99 +1,48 @@
-body{
-
-//background-color:  rgb(196, 255, 223);;
-img{
-  // background-position: center;
-   //background-repeat: no-repeat;
-   //background-attachment: fixed;
-   height: 500px;
-   width: 1200px;
-   margin-left: 60px;
-
- }
- h1{
-   font-weight: bolder;
-   font-family: Georgia, 'Times New Roman', Times, serif;
-   text-align: center;
-   font-size: xx-large;
-   margin-top: 10px;
- }
- .row {
-   display: flex;
-   flex-wrap: wrap;
-   padding: 0 4px;
-   margin-top: 5%;
- }
-
- /* Create four equal columns that sits next to each other */
- .column {
-   flex: 20%;
-   max-width: 20%;
-   padding: 0 4px;
-  // background-color: antiquewhite;
-   margin-left: 30px;
- }
-
- .column img {
-   margin-top: 8px;
-   vertical-align: middle;
-   width: 100%;
-   height: 60%;
-   margin-right: 20px;
-
- }
-
- .bg-image {
- //background-color: aqua;
-   background-size: cover;
-   background-position: center;
-   height: 100vh;
-   width: 100%;
- }
-
- .card-img-top {
-   width: 100%;
-   height: auto;
-   max-width: 300px;
-   max-height: 200px;
-   margin-left: 20px;
- }
-
- .shadow-hover:hover,
- .shadow-hover:active {
-   box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
-   transition: box-shadow 0.3s ease-in-out;
- }
- .card-title{
-   text-align: center;
-   font-family: Georgia, 'Times New Roman', Times, serif;
-   font-weight: bold;
- }
- button{
-   padding: 10px;
-   font-weight: bolder;
-   font-size: larger;
-   font-family: Georgia, 'Times New Roman', Times, serif;
- }
- .price {
-   font-size: large;
-   font-weight: bold;
-   color: #0bc486;
-   margin-left: 150px;
- }
- .card-title{
-   margin-top: 10px;
- }
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 3%;
 }
- #div{
-   background-color: lightpink;
-   height: 400px;
-   width: auto;
- }
-
-
-
-
-
-
-
-
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 10px;
+  width: 340px;
+}
+.card-img-top {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 5px 5px 0 0;
+}
+.shadow-hover:hover,
+.shadow-hover:active {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+  transition: box-shadow 0.3s ease-in-out;
+}
+.card-title {
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: x-large;
+}
+.price {
+  font-size: large;
+  font-weight: bold;
+  color: #1fa35b;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+button {
+  padding: 10px;
+  font-weight: bolder;
+  font-size: larger;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
