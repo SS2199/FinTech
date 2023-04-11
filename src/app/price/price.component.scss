@@ -35,10 +35,12 @@ h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   border-right: 1px solid #ddd;
+
 }
 
 .table-card-body {
   padding: 10px;
+  background-color: aliceblue;
 }
 
 .table-card-cell:last-child {
