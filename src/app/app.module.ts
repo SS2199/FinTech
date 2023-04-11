@@ -10,6 +10,7 @@ import { AboutComponent } from './about/about.component';
 import { CarosalComponent } from './carosal/carosal.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { PriceComponent } from './price/price.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     ContainerComponent,
     ProductComponent,
     AboutComponent,
-    CarosalComponent
+    CarosalComponent,
+    PriceComponent
   ],
   imports: [
     BrowserModule,
