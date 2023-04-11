@@ -1,2 +1,26 @@
-<h1>Coconut Market Rates </h1>
+<h1>Coconut Market Rates</h1>
 
+<table>
+  <thead>
+    <tr>
+      <th>State</th>
+      <th>District</th>
+      <th>Market</th>
+      <th>Commodity</th>
+      <th>Min Price</th>
+      <th>Max Price</th>
+      <th>Modal Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let price of prices">
+      <td>{{price.state}}</td>
+      <td>{{price.district}}</td>
+      <td>{{price.market}}</td>
+      <td>{{price.commodity}}</td>
+      <td>{{price.min_price}}</td>
+      <td>{{price.max_price}}</td>
+      <td>{{price.modal_price}}</td>
+    </tr>
+  </tbody>
+</table>
