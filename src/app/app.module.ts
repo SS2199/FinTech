@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { CarosalComponent } from './carosal/carosal.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { PriceComponent } from './price/price.component';
+import { CreateJobComponent } from './create-job/create-job.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +22,14 @@ import { PriceComponent } from './price/price.component';
     ProductComponent,
     AboutComponent,
     CarosalComponent,
-    PriceComponent
+    PriceComponent,
+    CreateJobComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule ,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
