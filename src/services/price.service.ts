@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PriceService {
 
-  private baseUrl = 'http://localhost:4000/api/prices';
+  private baseUrl = 'http://localhost:5000/api/prices';
 
   constructor(private http: HttpClient) { }
 
