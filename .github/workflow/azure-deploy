@@ -18,7 +18,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16' # Match your Angular project's Node version
+        node-version: '18' # Match your Angular project's Node version
         cache: 'npm'
 
     # Step 3: Install dependencies
