@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB Connection String (replace with your Azure Cosmos DB URI)
-const cosmosDbKey = process.env.COSMOS_DB_KEY;
+const cosmosDbKey = process.env.AZURE_COSMOS_CONNECTIONSTRING;
 
 
 mongoose
