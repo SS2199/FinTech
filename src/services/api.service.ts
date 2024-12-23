@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-    private apiUrl = 'http://localhost:5000/items';
+    private apiUrl = 'https://celescontainerwebapp-server.mongo.cosmos.azure.com:443/items';
 
 
   constructor(private http: HttpClient) {}
