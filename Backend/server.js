@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const cosmosDbKey = process.env.AZURE_COSMOS_CONNECTIONSTRING;  // Ensure you set the correct environment variable for your connection string
 
 // Determine the Mongo URI for connecting to Cosmos DB
-const mongoURI = cosmosDbKey || 'mongodb://127.0.0.1:27017/';  // Use local DB as a fallback
+const mongoURI = 'mongodb://127.0.0.1:27017/';  // Use local DB as a fallback
 
 // Connect to MongoDB (Cosmos DB)
 mongoose
