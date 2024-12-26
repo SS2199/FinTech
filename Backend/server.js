@@ -16,6 +16,9 @@ app.use(cors({
   credentials: true, // Allow cookies/auth tokens
 }));
 
+// Handle preflight requests
+app.options('*', cors());
+
 // MongoDB Connection
 const connectToDatabase = async () => {
   const mongoURI = process.env.USE_CLOUD_DB === 'true'
