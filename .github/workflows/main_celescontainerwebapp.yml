@@ -23,9 +23,9 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          npm install -f
+          npm install
           npm run build --if-present
-          # npm run test --if-present
+          npm run test --if-present
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'staging'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -57,15 +57,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A169D75FE28C4054B2EA0BF9CA62260E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EB0B43B786124D66B28FA5737575A114 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4211E51FAE2B433E834E7E479880F1A3 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F9210068B8A1471CBD0CBCD52DE84D3D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0514F5FF3D84413AB425D1D8B79C6767 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_348B7B5F3B084DEA976AE1ADCF1DC628 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'CelesContainerWebApp'
-          slot-name: 'staging'
+          slot-name: 'Production'
           package: .
           
