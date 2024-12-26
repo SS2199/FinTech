@@ -16,6 +16,7 @@ app.use(cors({
   credentials: true, // Allow cookies/auth tokens
 }));
 
+
 // Handle preflight requests
 app.options('*', cors());
 
