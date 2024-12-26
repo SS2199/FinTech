@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://celescontainerwebapp-server.mongo.cosmos.azure.com:443/items';
+  private apiUrl = 'https://celescontainerwebapp-server.mongo.cosmos.azure.com:443/';
   //private apiUrl = 'http://localhost:5000/items';
 
   constructor(private http: HttpClient) {}
