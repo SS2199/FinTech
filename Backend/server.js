@@ -2,13 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config(); // Load environment variables from .env file
 
 // Create app instance
 const app = express();
 
 // Middleware
 app.use(bodyParser.json()); // Parse incoming JSON requests
+//app.use(cors());
 app.use(cors({
   origin: 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net', // Replace with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
@@ -16,20 +16,26 @@ app.use(cors({
   credentials: true, // Allow cookies/auth tokens
 }));
 
-// MongoDB Connection String (Azure Cosmos DB)
-const mongoURI = process.env.AZURE_COSMOS_CONNECTIONSTRING || 'mongodb://127.0.0.1:27017/'; // Fallback to local MongoDB
+// MongoDB Connection
+const connectToDatabase = async () => {
+  const mongoURI = process.env.USE_CLOUD_DB === 'true'
+    ? process.env.AZURE_COSMOS_CONNECTIONSTRING // Cloud MongoDB URI
+    : 'mongodb://127.0.0.1:27017/FinanceDB'; // Local MongoDB URI
 
-// Connect to MongoDB
-mongoose
-  .connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('Connected to Cosmos DB'))
-  .catch((err) => {
-    console.error('Error connecting to Cosmos DB:', err);
+  try {
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(`Connected to ${process.env.USE_CLOUD_DB === 'true' ? 'Cloud' : 'Local'} MongoDB`);
+  } catch (error) {
+    console.error(`Error connecting to MongoDB (${mongoURI}):`, error);
     process.exit(1); // Exit if the database connection fails
-  });
+  }
+};
+
+// Initialize database connection
+connectToDatabase();
 
 // Sample Mongoose Schema and Model
 const ItemSchema = new mongoose.Schema({
