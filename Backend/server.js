@@ -80,16 +80,10 @@ app.post('/items', async (req, res) => {
 });
 
 
-// Serve static files (index.html) for the frontend
-app.get('/', (req, res) => {
-  const indexFilePath = path.join(__dirname, 'index.html');
-  console.log('Sending index.html from:', indexFilePath);
+app.use(express.static(path.join(__dirname, 'dist/fin-tech')));
 
-  if (fs.existsSync(indexFilePath)) {
-    res.sendFile(indexFilePath); // Send the index.html file as a response
-  } else {
-    res.status(404).send('index.html not found');
-  }
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/fin-tech/index.html'));
 });
 
 // Start the server
