@@ -16,11 +16,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use CORS middleware to enable cross-origin requests
-app.use(cors()); // This allows all origins by default
+//app.use(cors()); // This allows all origins by default
 app.use(cors({
   origin: 'https://celescontainerwebapp-testing-e6dsepgybagsfmb4.westus3-01.azurewebsites.net', // Allow requests from this origin
   methods: ['GET', 'POST', 'PUT'], // Allowed HTTP methods
 }));
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://celescontainerwebapp-testing-e6dsepgybagsfmb4.westus3-01.azurewebsites.net');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 
 // Explicitly handle the OPTIONS preflight requests (sometimes necessary)
 app.options('*', cors());  // Enable pre-flight for all routes
@@ -52,23 +60,25 @@ app.get('/items', async (req, res) => {
   }
 });
 
-// Endpoint to add a new item (POST /items)
 app.post('/items', async (req, res) => {
-  const { message } = req.body; // Extract message from the request body
-
+  const { message } = req.body;
+  
   if (!message) {
     return res.status(400).json({ success: false, message: 'Message is required' });
   }
 
   try {
-    const newItem = new ItemModel({ message }); // Create a new item based on the schema
-    const result = await newItem.save(); // Save the new item in MongoDB
-    res.json({ success: true, data: result }); // Send the saved item data back in JSON format
+    const newItem = new ItemModel({ message });
+    const result = await newItem.save();
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ success: true, data: result });
   } catch (err) {
     console.error('Error while saving item:', err);
+    res.setHeader('Content-Type', 'application/json');
     res.status(500).json({ success: false, message: 'Error while saving item' });
   }
 });
+
 
 // Serve static files (index.html) for the frontend
 app.get('/', (req, res) => {

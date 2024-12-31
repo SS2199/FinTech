@@ -37,7 +37,7 @@ export class ApiService {
   //   );
   // }
 
-  addItem(item: Item): Observable<any> {
+  /*addItem(item: Item): Observable<any> {
     // Specify the expected response type (if JSON)
     return this.http.post<any>(this.apiUrl, item).pipe(
       // Handle successful response with map operator (optional)
@@ -48,7 +48,15 @@ export class ApiService {
       // Handle errors using catchError operator
       catchError(this.handleError)
     );
-  }
+  }*/
+
+    addItem(item: any): Observable<Item> {
+      return this.http.post<Item>('https://celescontainerwebapp-testing-e6dsepgybagsfmb4.westus3-01.azurewebsites.net/items', item, {
+        headers: { 'Content-Type': 'application/json' },
+        responseType: 'json' as 'json' // Explicitly expect JSON
+      });
+    }
+    
 
 
   private handleError(error: HttpErrorResponse): Observable<never> {
