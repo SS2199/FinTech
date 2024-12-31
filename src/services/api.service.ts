@@ -12,7 +12,7 @@ interface Item {
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://celescontainerwebapp-testing-e6dsepgybagsfmb4.westus3-01.azurewebsites.net';
+  private apiUrl = 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net';
   //private apiUrl = 'http://localhost:5000/items';
 
   constructor(private http: HttpClient) {}
@@ -51,7 +51,7 @@ export class ApiService {
   }*/
 
     addItem(item: any): Observable<Item> {
-      return this.http.post<Item>('https://celescontainerwebapp-testing-e6dsepgybagsfmb4.westus3-01.azurewebsites.net/items', item, {
+      return this.http.post<Item>('https://https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net/items', item, {
         headers: { 'Content-Type': 'application/json' },
         responseType: 'json' as 'json' // Explicitly expect JSON
       });

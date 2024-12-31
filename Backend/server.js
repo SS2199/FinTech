@@ -18,12 +18,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use CORS middleware to enable cross-origin requests
 //app.use(cors()); // This allows all origins by default
 app.use(cors({
-  origin: 'https://celescontainerwebapp-testing-e6dsepgybagsfmb4.westus3-01.azurewebsites.net', // Allow requests from this origin
+  origin: 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net', // Allow requests from this origin
   methods: ['GET', 'POST', 'PUT'], // Allowed HTTP methods
 }));
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://celescontainerwebapp-testing-e6dsepgybagsfmb4.westus3-01.azurewebsites.net');
+  res.setHeader('Access-Control-Allow-Origin', 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
