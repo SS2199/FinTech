@@ -3,6 +3,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+interface Item {
+  message: string;
+  // Add other properties if needed
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,11 +31,25 @@ export class ApiService {
     );
   }
 
-  addItem(item: any): Observable<any> {
-    return this.http.post(this.apiUrl, item).pipe(
+  // addItem(item: any): Observable<any> {
+  //   return this.http.post(this.apiUrl, item).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
+
+  addItem(item: Item): Observable<any> {
+    // Specify the expected response type (if JSON)
+    return this.http.post<any>(this.apiUrl, item).pipe(
+      // Handle successful response with map operator (optional)
+      map(response => {
+        // Process the response data here (if needed)
+        return response;
+      }),
+      // Handle errors using catchError operator
       catchError(this.handleError)
     );
   }
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
