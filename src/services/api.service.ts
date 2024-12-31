@@ -4,8 +4,8 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 interface Item {
-  message: string;
-  // Add other properties if needed
+  name: string;
+  price: number;
 }
 
 @Injectable({

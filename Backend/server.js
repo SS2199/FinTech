@@ -31,12 +31,13 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB:', err));
 
-// Define the schema and model for items in the collection
-const ItemSchema = new mongoose.Schema({
-  message: { type: String, required: true },
-});
-
-const ItemModel = mongoose.model('Item', ItemSchema);
+  const ItemSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+  });
+  
+  const ItemModel = mongoose.model('Item', ItemSchema);
+  
 
 // Routes
 
