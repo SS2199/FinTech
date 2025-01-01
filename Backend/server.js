@@ -2,11 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const fs = require('fs'); // For checking file paths
 const cors = require('cors'); // Import the CORS package
 
 const app = express();
-const port = process.env.PORT || 5000; // Changed to 5000 to match the Angular default port
+const port = process.env.PORT || 5000;
 
 // Azure Cosmos DB connection string
 const mongoURI = "mongodb://celescontainerwebapp-server:Cd8bsmtPGb944jUTWSF6f03i9ZyuoYpKSNd14ZX7rrL5hM9yzcdZF6WidOZABiakigan29ihvSGtACDbgtLJdg==@celescontainerwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@celescontainerwebapp-server@";
@@ -16,70 +15,59 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use CORS middleware to enable cross-origin requests
-//app.use(cors()); // This allows all origins by default
 app.use(cors({
-  origin: 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net', // Allow requests from this origin
-  methods: ['GET', 'POST', 'PUT'], // Allowed HTTP methods
+  origin: 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
-
-
-// Explicitly handle the OPTIONS preflight requests (sometimes necessary)
-app.options('*', cors());  // Enable pre-flight for all routes
+// Explicitly handle the OPTIONS preflight requests
+app.options('*', cors());
 
 // Connect to MongoDB
-mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB:', err));
 
-  const ItemSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    price: { type: Number, required: true },
-  });
-  
-  const ItemModel = mongoose.model('Item', ItemSchema);
-  
+// Define Item Schema and Model
+const ItemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+});
+const ItemModel = mongoose.model('Item', ItemSchema);
 
 // Routes
 
-// Endpoint to fetch all items (GET /items)
+// GET /items - Fetch all items
 app.get('/items', async (req, res) => {
   try {
-    const items = await ItemModel.find(); // Fetch all items from the MongoDB collection
-    res.json({ success: true, items }); // Send the items in JSON format
+    const items = await ItemModel.find(); // Fetch all items
+    res.json({ success: true, items }); // Send items as JSON
   } catch (err) {
     console.error('Error retrieving items:', err);
     res.status(500).json({ success: false, message: 'Error retrieving items' });
   }
 });
 
+// POST /items - Add a new item
 app.post('/items', async (req, res) => {
-  const { message } = req.body;
-  
-  if (!message) {
-    return res.status(400).json({ success: false, message: 'Message is required' });
+  const { name, price } = req.body;
+
+  if (!name || !price) {
+    return res.status(400).json({ success: false, message: 'Name and price are required' });
   }
 
   try {
-    const newItem = new ItemModel({ message });
+    const newItem = new ItemModel({ name, price });
     const result = await newItem.save();
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json({ success: true, data: result });
+    res.status(201).json({ success: true, data: result });
   } catch (err) {
     console.error('Error while saving item:', err);
-    res.setHeader('Content-Type', 'application/json');
     res.status(500).json({ success: false, message: 'Error while saving item' });
   }
 });
 
-
+// Serve Angular Frontend
 app.use(express.static(path.join(__dirname, 'dist/fin-tech')));
 
 app.get('*', (req, res) => {
