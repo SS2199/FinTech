@@ -1,80 +1,64 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const path = require('path');
-const cors = require('cors'); // Import the CORS package
+const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 3000;
 
-// Azure Cosmos DB connection string
-const mongoURI = "mongodb://celescontainerwebapp-server:Cd8bsmtPGb944jUTWSF6f03i9ZyuoYpKSNd14ZX7rrL5hM9yzcdZF6WidOZABiakigan29ihvSGtACDbgtLJdg==@celescontainerwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@celescontainerwebapp-server@";
-
-// Middleware for parsing JSON and form data
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// Use CORS middleware to enable cross-origin requests
-app.use(cors({
-  origin: 'https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+// MongoDB connection
+mongoose
+  .connect('mongodb://celescontainerwebapp-server:Cd8bsmtPGb944jUTWSF6f03i9ZyuoYpKSNd14ZX7rrL5hM9yzcdZF6WidOZABiakigan29ihvSGtACDbgtLJdg==@celescontainerwebapp-server.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@celescontainerwebapp-server@', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => console.error('MongoDB Connection Error:', err));
 
-// Explicitly handle the OPTIONS preflight requests
-app.options('*', cors());
-
-// Connect to MongoDB
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('Could not connect to MongoDB:', err));
-
-// Define Item Schema and Model
-const ItemSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
+// Schema and Model
+const MessageSchema = new mongoose.Schema({
+  text: String,
 });
-const ItemModel = mongoose.model('Item', ItemSchema);
+const Message = mongoose.model('Message', MessageSchema);
 
-// Routes
-
-// GET /items - Fetch all items
+// Endpoints
 app.get('/items', async (req, res) => {
   try {
-    const items = await ItemModel.find(); // Fetch all items
-    res.json({ success: true, items }); // Send items as JSON
+    const messages = await Message.find();
+    res.json({ success: true, messages });
   } catch (err) {
-    console.error('Error retrieving items:', err);
-    res.status(500).json({ success: false, message: 'Error retrieving items' });
+    res.status(500).json({ success: false, message: 'Error fetching messages' });
   }
 });
 
-// POST /items - Add a new item
-app.post('/items', async (req, res) => {
-  const { name, price } = req.body;
-
-  if (!name || !price) {
-    return res.status(400).json({ success: false, message: 'Name and price are required' });
-  }
-
+app.post('/add-item', async (req, res) => {
   try {
-    const newItem = new ItemModel({ name, price });
-    const result = await newItem.save();
-    res.status(201).json({ success: true, data: result });
+    const newMessage = new Message(req.body);
+    await newMessage.save();
+    res.status(201).json({ success: true });
   } catch (err) {
-    console.error('Error while saving item:', err);
-    res.status(500).json({ success: false, message: 'Error while saving item' });
+    res.status(500).json({ success: false, message: 'Error adding message' });
   }
 });
 
-// Serve Angular Frontend
-app.use(express.static(path.join(__dirname, 'dist/fin-tech')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/fin-tech/index.html'));
+app.delete('/delete-item/:id', async (req, res) => {
+  try {
+    await Message.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error deleting message' });
+  }
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.put('/update-item/:id', async (req, res) => {
+  try {
+    const updatedMessage = await Message.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json({ success: true, updatedMessage });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error updating message' });
+  }
 });
+
+// Start Server
+app.listen(port, () => console.log(`Server running on port ${port}`));
