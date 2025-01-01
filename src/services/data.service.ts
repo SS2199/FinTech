@@ -5,7 +5,7 @@ import { from, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:3000'; // Replace with your backend URL
+  private apiUrl = 'http://https://celescontainerwebapp-staging-b5g9ehgkhyb0dpe9.westus3-01.azurewebsites.net'; // Replace with your backend URL
 
   // GET: Fetch all items
   fetchItems(): Observable<any> {
