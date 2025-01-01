@@ -1,30 +1,49 @@
-import { Component } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: `
+    <h1>CRUD Operations with Fetch</h1>
+    <form (submit)="addMessage()">
+      <input [(ngModel)]="newMessage" placeholder="Enter a message" />
+      <button type="submit">Add Message</button>
+    </form>
+    <ul>
+      <li *ngFor="let message of messages">
+        {{ message.text }}
+        <button (click)="deleteMessage(message.id)">Delete</button>
+      </li>
+    </ul>
+  `,
 })
-export class AppComponent {
- 
-  items: any[] = [];
-  newItem = { name: '', price: 0 };
+export class AppComponent implements OnInit {
+  messages: any[] = [];
+  newMessage = '';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    this.loadItems();
+    this.loadMessages();
   }
 
-  loadItems() {
-    this.apiService.getItems().subscribe((data) => (this.items = data));
+  loadMessages() {
+    this.dataService.fetchItems().subscribe((data) => {
+      this.messages = data.messages;
+    });
   }
 
-  addItem() {
-    this.apiService.addItem(this.newItem).subscribe((item) => {
-      this.items.push(item);
-      this.newItem = { name: '', price: 0 };
+  addMessage() {
+    const newMessage = { text: this.newMessage };
+    this.dataService.addItem(newMessage).subscribe(() => {
+      this.newMessage = '';
+      this.loadMessages();
+    });
+  }
+
+  deleteMessage(id: string) {
+    this.dataService.deleteItem(id).subscribe(() => {
+      this.loadMessages();
     });
   }
 }
