@@ -21,32 +21,32 @@ jobs:
           node-version: '18' # Match your Angular project's Node version
           cache: 'npm'
 
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: |
-          npm install -f
-          cd Backend
-          npm install -f
+      # Step 3: Install dependencies for Frontend
+      - name: Install Frontend dependencies
+        run: npm install -f
 
       # Step 4: Build Angular app
       - name: Build Angular app
         run: npm run build -- --configuration=production
 
-      # Step 5: Ensure deployment path exists
-      - name: Ensure deployment path exists
-        run: mkdir -p /home/site/wwwroot
-
-      # Step 6: Deploy Backend (Server.js)
-      - name: Deploy Backend to Azure Web App
+      # Step 5: Install dependencies for Backend
+      - name: Install Backend dependencies
         run: |
           cd Backend
-          cp -r . /home/site/wwwroot/Backend
+          npm install -f
 
-      # Step 7: Deploy Angular app to Azure Web App
-      - name: Deploy Frontend to Azure Web App
+      # Step 6: Package application for deployment
+      - name: Package application
+        run: |
+          mkdir -p deployment
+          cp -r ./dist/fin-tech ./deployment/frontend
+          cp -r ./Backend ./deployment/backend
+
+      # Step 7: Deploy to Azure Web App
+      - name: Deploy Application to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: celescontainerwebapp # Your App Service name
           slot-name: staging
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: ./dist/fin-tech # Replace with your Angular app's dist folder name
+          package: ./deployment
