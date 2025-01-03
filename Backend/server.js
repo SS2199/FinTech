@@ -26,7 +26,7 @@ const MessageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', MessageSchema);
 
-// API Routes
+// API Routes (These should come before the static files)
 app.get('/api/items', async (req, res) => {
   try {
     const messages = await Message.find();
