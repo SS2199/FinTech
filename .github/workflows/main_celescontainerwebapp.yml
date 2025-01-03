@@ -1,4 +1,4 @@
-name: Deploy Angular App to Azure
+name: Deploy Angular App and Backend to Azure
 
 on:
   push:
@@ -23,15 +23,23 @@ jobs:
 
     # Step 3: Install dependencies
     - name: Install dependencies
-      run: npm install -f
-           npm install axios
+      run: |
+        npm install -f
+        npm install axios
 
     # Step 4: Build Angular app
     - name: Build Angular app
       run: npm run build -- --configuration=production
 
-    # Step 5: Deploy to Azure App Service
-    - name: Deploy to Azure Web App
+    # Step 5: Deploy Backend (Server.js)
+    - name: Deploy Backend to Azure Web App
+      run: |
+        cd Backend
+        npm install
+        cp -r ./* /home/site/wwwroot
+
+    # Step 6: Deploy Angular app to Azure Web App
+    - name: Deploy Frontend to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: celescontainerwebapp # Your App Service name
