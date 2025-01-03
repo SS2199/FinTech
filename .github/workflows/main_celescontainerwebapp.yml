@@ -10,39 +10,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Set up Node.js
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18' # Match your Angular project's Node version
-        cache: 'npm'
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Match your Angular project's Node version
+          cache: 'npm'
 
-    # Step 3: Install dependencies
-    - name: Install dependencies
-      run: |
-        npm install -f
-        # npm install axios
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install -f
+          cd Backend
+          npm install -f
 
-    # Step 4: Build Angular app
-    - name: Build Angular app
-      run: npm run build -- --configuration=production
+      # Step 4: Build Angular app
+      - name: Build Angular app
+        run: npm run build -- --configuration=production
 
-    # Step 5: Deploy Backend (Server.js)
-    - name: Deploy Backend to Azure Web App
-      run: |
-        cd Backend
-        npm install
-        cp -r ./* /home/site/wwwroot
+      # Step 5: Ensure deployment path exists
+      - name: Ensure deployment path exists
+        run: mkdir -p /home/site/wwwroot
 
-    # Step 6: Deploy Angular app to Azure Web App
-    - name: Deploy Frontend to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: celescontainerwebapp # Your App Service name
-        slot-name: staging
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        package: ./dist/fin-tech # Replace with your Angular app's dist folder name
+      # Step 6: Deploy Backend (Server.js)
+      - name: Deploy Backend to Azure Web App
+        run: |
+          cd Backend
+          cp -r . /home/site/wwwroot/Backend
+
+      # Step 7: Deploy Angular app to Azure Web App
+      - name: Deploy Frontend to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: celescontainerwebapp # Your App Service name
+          slot-name: staging
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: ./dist/fin-tech # Replace with your Angular app's dist folder name
